@@ -28,6 +28,11 @@ public class WikimediaChangesProducer {
         producerProperties.setProperty(ProducerConfig.ACKS_CONFIG, "all"); // same as setting -1
         producerProperties.setProperty(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));*/
 
+        // set high throughput producer configs
+        producerProperties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+        producerProperties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Integer.toString(32 * 1024));
+        producerProperties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
+
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(producerProperties);
 
         String topic = "wikimedia.recentchange";
